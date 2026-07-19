@@ -6,7 +6,7 @@ module tt_um_nehaka_full_adder (
     output [7:0] uio_oe,
     input        ena,
     input        clk,
-    input        rst_n
+    input        rst_n 
 );
 
     // Prevent warnings for unused signals
