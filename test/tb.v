@@ -1,54 +1,70 @@
-`timescale 1ns / 1ps
+`timescale 1ns/1ps
 
-module tb_full_adder;
+module tb;
 
-    // Inputs
-    reg A;
-    reg B;
-    reg Cin;
+    reg  [7:0] ui_in;
+    wire [7:0] uo_out;
 
-    // Outputs
-    wire Sum;
-    wire Cout;
+    reg  [7:0] uio_in;
+    wire [7:0] uio_out;
+    wire [7:0] uio_oe;
 
-    // Instantiate the Full Adder
-    full_adder uut (
-        .A(A),
-        .B(B),
-        .Cin(Cin),
-        .Sum(Sum),
-        .Cout(Cout)
+    reg ena;
+    reg clk;
+    reg rst_n;
+
+    // Instantiate DUT
+    tt_um_nehaka_full_adder uut (
+        .ui_in(ui_in),
+        .uo_out(uo_out),
+        .uio_in(uio_in),
+        .uio_out(uio_out),
+        .uio_oe(uio_oe),
+        .ena(ena),
+        .clk(clk),
+        .rst_n(rst_n)
     );
 
-    // Apply test vectors
     initial begin
+        ena    = 1'b1;
+        clk    = 1'b0;
+        rst_n  = 1'b1;
+        uio_in = 8'b0;
 
-        $display("A B Cin | Sum Cout");
-        $display("------------------");
+        $display(" A B Cin | Sum Cout");
+        $display("--------------------");
 
-        A=0; B=0; Cin=0; #10;
-        $display("%b %b  %b  |  %b    %b", A,B,Cin,Sum,Cout);
+        ui_in = 8'b00000000; #10;
+        $display(" %b %b  %b  |  %b    %b",
+            ui_in[0], ui_in[1], ui_in[2], uo_out[0], uo_out[1]);
 
-        A=0; B=0; Cin=1; #10;
-        $display("%b %b  %b  |  %b    %b", A,B,Cin,Sum,Cout);
+        ui_in = 8'b00000100; #10;
+        $display(" %b %b  %b  |  %b    %b",
+            ui_in[0], ui_in[1], ui_in[2], uo_out[0], uo_out[1]);
 
-        A=0; B=1; Cin=0; #10;
-        $display("%b %b  %b  |  %b    %b", A,B,Cin,Sum,Cout);
+        ui_in = 8'b00000010; #10;
+        $display(" %b %b  %b  |  %b    %b",
+            ui_in[0], ui_in[1], ui_in[2], uo_out[0], uo_out[1]);
 
-        A=0; B=1; Cin=1; #10;
-        $display("%b %b  %b  |  %b    %b", A,B,Cin,Sum,Cout);
+        ui_in = 8'b00000110; #10;
+        $display(" %b %b  %b  |  %b    %b",
+            ui_in[0], ui_in[1], ui_in[2], uo_out[0], uo_out[1]);
 
-        A=1; B=0; Cin=0; #10;
-        $display("%b %b  %b  |  %b    %b", A,B,Cin,Sum,Cout);
+        ui_in = 8'b00000001; #10;
+        $display(" %b %b  %b  |  %b    %b",
+            ui_in[0], ui_in[1], ui_in[2], uo_out[0], uo_out[1]);
 
-        A=1; B=0; Cin=1; #10;
-        $display("%b %b  %b  |  %b    %b", A,B,Cin,Sum,Cout);
+        ui_in = 8'b00000101; #10;
+        $display(" %b %b  %b  |  %b    %b",
+            ui_in[0], ui_in[1], ui_in[2], uo_out[0], uo_out[1]);
 
-        A=1; B=1; Cin=0; #10;
-        $display("%b %b  %b  |  %b    %b", A,B,Cin,Sum,Cout);
+        ui_in = 8'b00000011; #10;
+        $display(" %b %b  %b  |  %b    %b",
+            ui_in[0], ui_in[1], ui_in[2], uo_out[0], uo_out[1]);
 
-        A=1; B=1; Cin=1; #10;
-        $display("%b %b  %b  |  %b    %b", A,B,Cin,Sum,Cout);
+        ui_in = 8'b00000111; #10;
+        $display(" %b %b  %b  |  %b    %b",
+            ui_in[0], ui_in[1], ui_in[2], uo_out[0], uo_out[1]);
 
         $finish;
     end
